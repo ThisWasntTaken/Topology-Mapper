@@ -7,11 +7,34 @@ from win32api import GetSystemMetrics
 
 class Mapper:
     def __init__(self, data):
+        """
+        Initialize the Mapper instance.
+
+        Parameters:
+        - data          : the data for which the mapper is defined
+
+        Returns:
+        - None
+        """
         self.data = data
         self.clusters = None
 
     @staticmethod
     def get_cover(domain, interval_len, overlap):
+        """
+        A static method that returns a uniform cover for a domain, given the length of each
+        interval and the overlap.
+
+        Optional, utility function that can always be replaced by a user-defined cover
+
+        Parameters:
+        - domain        : the range of Real Numbers over which the cover has to be defined
+        - interval_len  : the length of each interval in the cover
+        - overlap       : the length of overlap between two adjacent intervals in the cover
+
+        Returns:
+        - A list of tuples that represents a uniform cover for the domain
+        """
         domain_min = domain[0]
         domain_max = domain[1]
         cover = []
@@ -28,6 +51,18 @@ class Mapper:
         return cover
 
     def make_clusters(self, filter_func, cover, dbscan_algo):
+        """
+        A method that forms clusters from the data using DBSCAN over each interval in the cover.
+
+        Parameters:
+        - filter_func   : a filter function that, given a sample of data and an interval, decides if
+                          the sample belongs to the interval
+        - cover         : a cover of the domain over which the lens (filter function) is defined
+        - dbscan_algo   : a specific instatiation of the DBSCAN algorithm from sklearn.cluster
+
+        Returns:
+        - A list of sets, with each set being a cluster of points
+        """
         clusters = []
         for (low, high) in cover:
             to_cluster = list(filter(lambda p : filter_func(p, (low, high)), self.data))
@@ -45,6 +80,15 @@ class Mapper:
         return clusters
 
     def create_graph(self, file_name):
+        """
+        Create, display and save a graph in pyvis.network.Network format
+
+        Parameters:
+        - file_name     : the name of the file to which the graph is to be saved
+
+        Returns:
+        - A graph, an instance of pyvis.network.Network
+        """
         max_nodes = max([len(i) for i in self.clusters])
         g = net.Network(GetSystemMetrics(1), GetSystemMetrics(0), bgcolor="#222222")
         g.add_nodes(nodes = range(0, len(self.clusters), 1),
@@ -68,7 +112,7 @@ class Mapper:
             "color": {
             "inherit": true
             },
-            "smooth": false
+            "smooth": true
         },
         "physics": {
             "barnesHut": {
