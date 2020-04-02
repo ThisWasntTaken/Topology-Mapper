@@ -1,4 +1,4 @@
-# Topology-Mapper
+# Mapper - Topological Data Analysis
 
 ## Requirements
 * [python 3.x](https://www.python.org/)
@@ -20,4 +20,7 @@ The filter function is used to represent the data in a lower dimension space. Di
 Below is the data on the left, and the data as seen through the filter function, which is f(x, y) = y here, on the right.
 ![Scatter plot of the data](content/scatter.png "Data") ![Scater plot of data observed through the filter function](content/scatter_through_lens.png "Data through filter")
 
-A cover of the domain (say, (-1.3, 1.3)) of the filter function could be the overlapping intervals (-1.3, -0.6), (-0.8, -0.1), (-0.3, 0.4), (0.2, 0.9), (0.6999999999999997, 1.3). The 
+A cover of the domain (say, (-1.3, 1.3)) of the filter function could be the overlapping intervals (-1.3, -0.6), (-0.8, -0.1), (-0.3, 0.4), (0.2, 0.9), (0.7, 1.3). The points that belong to an interval as given by the filter function are collected from the original data and a clustering algorithm is run on each set of points. The below plot shows the data being split by the cover (overlaps are not shown).
+![Scatter plot of the data segregated by the cover](content/scatter_cover.png "Data after split by cover")
+
+After forming clusters, each cluster is represented by a node in a graph, with edges connecting two nodes only if the clusters corresponding to the nodes have a non-empty set intersection. The final result of this operation is shown [here](https://thiswasnttaken.github.io//assets/html/mapper.html)
