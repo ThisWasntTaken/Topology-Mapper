@@ -7,6 +7,8 @@
 * [pyvis](https://pyvis.readthedocs.io/en/latest/)
 * [scikit-learn](https://scikit-learn.org/stable/)
 
+Refer to requirements.txt for a complete list of packages and libraries.
+
 ## What is Mapper?
 Mapper is an unsupervised algorithm that is used to construct a simplicial complex (a graph) that represents the structure of data. It reveals topological features of the data so that the data can be explored better.
 
