@@ -26,5 +26,7 @@ A cover of the domain (say, (-1.3, 1.3)) of the filter function could be the ove
 ![Scatter plot of the data segregated by the cover](content/scatter_cover.png "Data after split by cover")
 
 After forming clusters, each cluster is represented by a node in a graph, with edges connecting two nodes only if the clusters corresponding to the nodes have a non-empty set intersection. The graph produced by this operation is shown below:
+
 ![Final Graph](content/graph.png "Data")
+
 **Click [here](https://thiswasnttaken.github.io//assets/html/mapper.html) for an interactive version**. It can be seen that there are two cycles in the graph that correspond to the two circles in the data. However, the feature that the two circles are concentric is NOT captured by Mapper.
