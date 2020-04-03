@@ -131,7 +131,7 @@ class Mapper:
 if __name__ == "__main__":
     from sklearn.datasets import make_circles
 
-    data = make_circles(n_samples=10000, noise=0.03, random_state=None, factor=0.3)[0]
+    data = make_circles(n_samples = 10000, noise = 0.03, random_state = None, factor = 0.3)[0]
     mapper = Mapper(data)
     cover = Mapper.get_cover(domain = (-1.3, 1.3), interval_len = 0.3, overlap = 0.1)
 
