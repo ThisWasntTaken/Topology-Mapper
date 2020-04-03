@@ -1,0 +1,77 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1366;
+            height: 768;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#ffe500", "id": 0, "label": " ", "shape": "dot", "size": 5.5, "title": "Contains 165 elements"}, {"color": "#ff5d00", "id": 1, "label": " ", "shape": "dot", "size": 33.96666666666667, "title": "Contains 1019 elements"}, {"color": "#ffc200", "id": 2, "label": " ", "shape": "dot", "size": 12.766666666666667, "title": "Contains 383 elements"}, {"color": "#ffc400", "id": 3, "label": " ", "shape": "dot", "size": 12.533333333333333, "title": "Contains 376 elements"}, {"color": "#ffd000", "id": 4, "label": " ", "shape": "dot", "size": 10.0, "title": "Contains 300 elements"}, {"color": "#ffd200", "id": 5, "label": " ", "shape": "dot", "size": 9.466666666666667, "title": "Contains 284 elements"}, {"color": "#ff6000", "id": 6, "label": " ", "shape": "dot", "size": 33.43333333333333, "title": "Contains 1003 elements"}, {"color": "#ffd600", "id": 7, "label": " ", "shape": "dot", "size": 8.633333333333333, "title": "Contains 259 elements"}, {"color": "#ff0000", "id": 8, "label": " ", "shape": "dot", "size": 53.3, "title": "Contains 1599 elements"}, {"color": "#ffd700", "id": 9, "label": " ", "shape": "dot", "size": 8.566666666666666, "title": "Contains 257 elements"}, {"color": "#ffaf00", "id": 10, "label": " ", "shape": "dot", "size": 16.833333333333332, "title": "Contains 505 elements"}, {"color": "#ffd900", "id": 11, "label": " ", "shape": "dot", "size": 7.966666666666667, "title": "Contains 239 elements"}, {"color": "#ffd900", "id": 12, "label": " ", "shape": "dot", "size": 8.133333333333333, "title": "Contains 244 elements"}, {"color": "#ffab00", "id": 13, "label": " ", "shape": "dot", "size": 17.6, "title": "Contains 528 elements"}, {"color": "#ffb000", "id": 14, "label": " ", "shape": "dot", "size": 16.6, "title": "Contains 498 elements"}, {"color": "#ffd900", "id": 15, "label": " ", "shape": "dot", "size": 8.066666666666666, "title": "Contains 242 elements"}, {"color": "#ffd900", "id": 16, "label": " ", "shape": "dot", "size": 8.0, "title": "Contains 240 elements"}, {"color": "#ffb100", "id": 17, "label": " ", "shape": "dot", "size": 16.5, "title": "Contains 495 elements"}, {"color": "#ffd800", "id": 18, "label": " ", "shape": "dot", "size": 8.166666666666666, "title": "Contains 245 elements"}, {"color": "#ffd900", "id": 19, "label": " ", "shape": "dot", "size": 8.133333333333333, "title": "Contains 244 elements"}, {"color": "#ffa400", "id": 20, "label": " ", "shape": "dot", "size": 19.2, "title": "Contains 576 elements"}, {"color": "#ffa100", "id": 21, "label": " ", "shape": "dot", "size": 19.8, "title": "Contains 594 elements"}, {"color": "#ff1600", "id": 22, "label": " ", "shape": "dot", "size": 48.733333333333334, "title": "Contains 1462 elements"}, {"color": "#ffd500", "id": 23, "label": " ", "shape": "dot", "size": 8.866666666666667, "title": "Contains 266 elements"}, {"color": "#ffd400", "id": 24, "label": " ", "shape": "dot", "size": 9.1, "title": "Contains 273 elements"}, {"color": "#ffcb00", "id": 25, "label": " ", "shape": "dot", "size": 10.966666666666667, "title": "Contains 329 elements"}, {"color": "#ffcc00", "id": 26, "label": " ", "shape": "dot", "size": 10.733333333333333, "title": "Contains 322 elements"}, {"color": "#ffdc00", "id": 27, "label": " ", "shape": "dot", "size": 7.433333333333334, "title": "Contains 223 elements"}, {"color": "#ff5000", "id": 28, "label": " ", "shape": "dot", "size": 36.7, "title": "Contains 1101 elements"}, {"color": "#ff8d00", "id": 29, "label": " ", "shape": "dot", "size": 23.866666666666667, "title": "Contains 716 elements"}]);
+        edges = new vis.DataSet([{"color": "#ffdd00", "from": 0, "to": 1}, {"color": "#ffdd00", "from": 1, "to": 2}, {"color": "#ffdd00", "from": 1, "to": 3}, {"color": "#ffdd00", "from": 2, "to": 4}, {"color": "#ffdd00", "from": 3, "to": 5}, {"color": "#ffdd00", "from": 4, "to": 9}, {"color": "#ffdd00", "from": 5, "to": 7}, {"color": "#ffdd00", "from": 6, "to": 8}, {"color": "#ffdd00", "from": 7, "to": 11}, {"color": "#ffdd00", "from": 8, "to": 10}, {"color": "#ffdd00", "from": 8, "to": 13}, {"color": "#ffdd00", "from": 9, "to": 12}, {"color": "#ffdd00", "from": 10, "to": 14}, {"color": "#ffdd00", "from": 11, "to": 15}, {"color": "#ffdd00", "from": 12, "to": 16}, {"color": "#ffdd00", "from": 13, "to": 17}, {"color": "#ffdd00", "from": 14, "to": 20}, {"color": "#ffdd00", "from": 15, "to": 18}, {"color": "#ffdd00", "from": 16, "to": 19}, {"color": "#ffdd00", "from": 17, "to": 21}, {"color": "#ffdd00", "from": 18, "to": 23}, {"color": "#ffdd00", "from": 19, "to": 24}, {"color": "#ffdd00", "from": 20, "to": 22}, {"color": "#ffdd00", "from": 21, "to": 22}, {"color": "#ffdd00", "from": 22, "to": 27}, {"color": "#ffdd00", "from": 23, "to": 25}, {"color": "#ffdd00", "from": 24, "to": 26}, {"color": "#ffdd00", "from": 25, "to": 28}, {"color": "#ffdd00", "from": 26, "to": 28}, {"color": "#ffdd00", "from": 28, "to": 29}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"shadow": {"enabled": true}}, "edges": {"color": {"inherit": true}, "smooth": true}, "physics": {"barnesHut": {"centralGravity": 0, "springLength": 50, "springConstant": 0.01, "avoidOverlap": 0.5}, "minVelocity": 0.75}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
