@@ -14,7 +14,7 @@ Mapper is an unsupervised algorithm that is used to construct a simplicial compl
 
 To construct the graph, we require:
 1. A Filter function that maps the data to a lower dimension (this implementation requires the range of the Filter funcion to be the space of real numbers)
-2. A cover of the range of the Filter function.
+2. A cover of the range of the Filter function with overlapping between each pair of consecutive intervals.
 
 The filter function is used to represent the data in a lower dimension space. Dimensionality-reduction techniques like PCA or t-SNE could be used here if required for data in very high dimensions.
 
