@@ -65,7 +65,7 @@ class Mapper:
         """
         clusters = []
         for (low, high) in cover:
-            to_cluster = list(filter(lambda p : filter_func(p, (low, high)), self.data))
+            to_cluster = list(filter(lambda p : filter_func(p) > low and filter_func(p) < high, self.data))
             if not len(to_cluster):
                 continue
             
@@ -136,9 +136,8 @@ if __name__ == "__main__":
     cover = Mapper.get_cover(domain = (-1.3, 1.3), interval_len = 0.3, overlap = 0.1)
 
     dbscan_algo = DBSCAN(algorithm = 'auto', eps = 0.1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
-    def filter_func(p, interval):
-        low, high = interval[0], interval[1]
-        return (p[1] >= low and p[1] <= high)
+    def filter_func(p):
+        return p[1]
 
     clusters = mapper.make_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
     graph = mapper.create_graph(file_name = "example.html")

@@ -13,8 +13,8 @@ Refer to requirements.txt for a complete list of packages and libraries.
 Mapper is an unsupervised algorithm that is used to construct a simplicial complex (a graph) that represents the structure of data. It reveals topological features of the data so that the data can be explored better.
 
 To construct the graph, we require:
-1. A Filter function
-2. A cover of the domain of the Filter function.
+1. A Filter function that maps the data to a lower dimension (this implementation requires the range of the Filter funcion to be the space of real numbers)
+2. A cover of the range of the Filter function.
 
 The filter function is used to represent the data in a lower dimension space. Dimensionality-reduction techniques like PCA or t-SNE could be used here if required for data in very high dimensions.
 
