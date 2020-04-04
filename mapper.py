@@ -7,15 +7,6 @@ from win32api import GetSystemMetrics
 
 class Mapper:
     def __init__(self, data):
-        """
-        Initialize the Mapper instance.
-
-        Parameters:
-        - data          : the data for which the mapper is defined
-
-        Returns:
-        - None
-        """
         self.data = data
         self.clusters = None
 
@@ -74,27 +65,20 @@ class Mapper:
         return clusters
 
     def create_graph(self, file_name):
-        """
-        Create, display and save a graph in pyvis.network.Network format
-
-        Parameters:
-        - file_name     : the name of the file to which the graph is to be saved
-
-        Returns:
-        - A graph, an instance of pyvis.network.Network
-        """
-        max_nodes = max([len(i) for i in self.clusters])
+        cluster_sizes = np.array([len(i) for i in self.clusters])
+        max_nodes = max(cluster_sizes)
+        min_nodes = min(cluster_sizes)
         g = net.Network(GetSystemMetrics(1), GetSystemMetrics(0), bgcolor="#222222")
         g.add_nodes(nodes = range(0, len(self.clusters), 1),
-                    size = [len(x) / len(self.clusters) for x in self.clusters],
+                    size = [((i - min_nodes + len(self.clusters)) / (max_nodes - min_nodes)) * 100 for i in cluster_sizes],
                     title = ["Contains " + str(len(x)) + " elements" for x in self.clusters],
                     label = [' '] * len(self.clusters),
-                    color = ['#%02x%02x%02x' % (255, 255 - int(len(i) / max_nodes * 255), 0) for i in self.clusters])
+                    color = ['#%02x%02x%02x' % (255, 255 - int(i / max_nodes * 255), 0) for i in cluster_sizes])
         for i in range(0, len(self.clusters)):
             for j in range(i + 1, len(self.clusters)):
                 if self.clusters[i].intersection(self.clusters[j]):
                     g.add_edge(i, j, color = '#ffdd00')
-        
+
         g.set_options("""
         var options = {
         "nodes": {
@@ -111,7 +95,7 @@ class Mapper:
         "physics": {
             "barnesHut": {
             "centralGravity": 0,
-            "springLength": 50,
+            "springLength": 1,
             "springConstant": 0.01,
             "avoidOverlap": 0.5
             },
@@ -125,9 +109,12 @@ class Mapper:
 if __name__ == "__main__":
     from sklearn.datasets import make_circles, make_blobs
 
-    # data = make_circles(n_samples = 10000, noise = 0.03, random_state = None, factor = 0.5)[0]
+    """
+    EXAMPLE 1
+    """
+    # data = make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5)[0]
     # mapper = Mapper(data)
-    # cover = Mapper.get_cover(range_ = [(-1.3, 1.3)], interval_len = [0.3], overlap = [0.1])
+    # cover = Mapper.get_cover(range_ = [(-1.3, 1.3)], interval_len = [0.1], overlap = [0.03])
 
     # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 0.05, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
     
@@ -136,8 +123,11 @@ if __name__ == "__main__":
 
     # filter_func = [filter_func_1]
     # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    # graph = mapper.create_graph(file_name = "make_circles.html")
+    # graph = mapper.create_graph(file_name = "make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5).html")
 
+    """
+    EXAMPLE 2
+    """
     data = make_blobs(n_samples = 5000, n_features = 5, random_state = 44)[0]
     mapper = Mapper(data)
     cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
@@ -152,4 +142,4 @@ if __name__ == "__main__":
 
     filter_func = [filter_func_1, filter_func_2]
     clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    graph = mapper.create_graph(file_name = "make_blobs_5f_3b.html")
+    graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
