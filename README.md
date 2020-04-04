@@ -29,4 +29,4 @@ The data is a pair of concentric circles as shown below on the left. The filter 
 
 Let the cover of the range of the filter function be in the interval (-1.3, 1,3), with a uniform interval length of 0.1 and an overlap of 0.03. Explicitly, the cover is **{(-1.3, -1.2), (-1.23, -1.13), ... (1.22, 1.3)}**. The data is split using the filter function `f(x, y) = y` as shown below in the figure to the left. The data points in the original data retrieved by the inverse of `f` so that they are split into groups as shown in the figure to the right.
 
-![Data split through lens](content/make_circles_scatter_clusters_theough_lens.png "Data split through lens") ![Data split in domain](content/make_circles_scatter_clusters.png "Data split in domain")
+![Data split through lens](content/make_circles_scatter_clusters_through_lens.png "Data split through lens") ![Data split in domain](content/make_circles_scatter_clusters.png "Data split in domain")
