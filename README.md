@@ -37,4 +37,4 @@ Since the intervals in the cover are overlapping, consecutive intervals can cont
 
 Click [here](https://thiswasnttaken.github.io//assets/html/make_circles(n_samples%20=%2010000,%20noise%20=%200.05,%20random_state%20=%2044,%20factor%20=%200.5).html) for an interactive version.
 
-Each cycle in the graph corresponds to a circle in the data. However, the feature that the two circles are concentric is not captured by mapper.
+Each cycle in the graph corresponds to a circle in the data. However, the feature that the two circles are concentric is not captured by Mapper.
