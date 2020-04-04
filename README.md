@@ -25,4 +25,4 @@ make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5)
 ```
 The data is a pair of concentric circles as shown below on the left. The filter function (lens) is `f(x, y) = y`. The data as seen through the lens is shown on the right.
 
-![Data](content/make_circles_scatter "Data") ![Data through lens](content/make_circles_scatter_clusters_through_lens "Data through lens")
+![Data](content/make_circles_scatter.png "Data") ![Data through lens](content/make_circles_scatter_clusters_through_lens.png "Data through lens")
