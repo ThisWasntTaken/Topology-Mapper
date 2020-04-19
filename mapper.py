@@ -33,11 +33,10 @@ class Mapper:
         return cover
 
     def get_clusters(self, filter_func, cover, dbscan_algo):
-        assert len(cover) == len(filter_func), "Dimension mismatch!"
         clusters = []
         
         def __get_clusters(filter_func, cover, _rec_num, _low, _high):
-            if _rec_num < len(cover):
+            if _rec_num < l:
                 for (low, high) in cover[_rec_num]:
                     _low[_rec_num], _high[_rec_num] = low, high
                     __get_clusters(filter_func, cover, _rec_num + 1, _low, _high)
@@ -45,9 +44,11 @@ class Mapper:
                 to_cluster = []
                 for p in self.data:
                     flag = True
-                    for i in range(len(_low)):
-                        flag = flag and (filter_func[i](p) >= _low[i] and filter_func[i](p) <= _high[i])
-
+                    interval = []
+                    for i in range(l):
+                        interval.append((_low[i], _high[i]))
+                        
+                    flag = filter_func(p, interval)
                     if flag:
                         to_cluster.append(p)
 
@@ -59,7 +60,7 @@ class Mapper:
                     for i in range(0, n_clusters):
                         clusters.append(set([tuple(p) for p in to_cluster[labels == i]]))
         
-        l = len(filter_func)
+        l = len(cover)
         __get_clusters(filter_func, cover, _rec_num = 0, _low = [0] * l, _high = [0] * l)
         self.clusters = clusters
         return clusters
@@ -112,34 +113,37 @@ if __name__ == "__main__":
     """
     EXAMPLE 1
     """
-    # data = make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5)[0]
-    # mapper = Mapper(data)
-    # cover = Mapper.get_cover(range_ = [(-1.3, 1.3)], interval_len = [0.1], overlap = [0.03])
+    data = make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5)[0]
+    mapper = Mapper(data)
+    cover = Mapper.get_cover(range_ = [(-1.3, 1.3)], interval_len = [0.1], overlap = [0.03])
 
-    # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 0.05, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
-    
-    # def filter_func_1(p):
-    #     return p[1]
+    dbscan_algo = DBSCAN(algorithm = 'auto', eps = 0.05, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    # filter_func = [filter_func_1]
-    # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    # graph = mapper.create_graph(file_name = "make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5).html")
+    def filter_func(p, interval):
+        flag = True
+        for i in range(len(interval)):
+            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+        
+        return flag
+
+    clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
+    graph = mapper.create_graph(file_name = "make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5).html")
 
     """
     EXAMPLE 2
     """
-    data = make_blobs(n_samples = 5000, n_features = 5, random_state = 44)[0]
-    mapper = Mapper(data)
-    cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
+    # data = make_blobs(n_samples = 5000, n_features = 5, random_state = 44)[0]
+    # mapper = Mapper(data)
+    # cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
 
-    dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
+    # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    def filter_func_1(p):
-        return p[0]
+    # def filter_func(p, interval):
+    #     flag = True
+    #     for i in range(len(interval)):
+    #         flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+        
+    #     return flag
 
-    def filter_func_2(p):
-        return p[1]
-
-    filter_func = [filter_func_1, filter_func_2]
-    clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
+    # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
+    # graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
