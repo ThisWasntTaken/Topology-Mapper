@@ -5,6 +5,17 @@ import networkx as nx
 from pyvis import network as net
 from win32api import GetSystemMetrics
 
+def get_data_from_gts(gts_file_name):
+    data = []
+    file = open(gts_file_name, "r")
+    lines = file.readlines()
+    end = int(lines[0][:-1].split(' ')[0]) + 1
+    for i in range(1, end):
+        point = list(map(float, lines[i][:-1].split(' ')))
+        data.append(point)
+    
+    return np.array(data)
+
 class Mapper:
     def __init__(self, data):
         self.data = data
@@ -35,11 +46,11 @@ class Mapper:
     def get_clusters(self, filter_func, cover, dbscan_algo):
         clusters = []
         
-        def __get_clusters(filter_func, cover, _rec_num, _low, _high):
+        def __get_clusters(_rec_num, _low, _high):
             if _rec_num < l:
                 for (low, high) in cover[_rec_num]:
                     _low[_rec_num], _high[_rec_num] = low, high
-                    __get_clusters(filter_func, cover, _rec_num + 1, _low, _high)
+                    __get_clusters(_rec_num + 1, _low, _high)
             else:
                 to_cluster = []
                 for p in self.data:
@@ -48,7 +59,7 @@ class Mapper:
                     for i in range(l):
                         interval.append((_low[i], _high[i]))
                         
-                    flag = filter_func(p, interval)
+                    flag = filter_func(point = p, interval = interval)
                     if flag:
                         to_cluster.append(p)
 
@@ -61,7 +72,7 @@ class Mapper:
                         clusters.append(set([tuple(p) for p in to_cluster[labels == i]]))
         
         l = len(cover)
-        __get_clusters(filter_func, cover, _rec_num = 0, _low = [0] * l, _high = [0] * l)
+        __get_clusters(_rec_num = 0, _low = [0] * l, _high = [0] * l)
         self.clusters = clusters
         return clusters
 
@@ -119,10 +130,10 @@ if __name__ == "__main__":
 
     dbscan_algo = DBSCAN(algorithm = 'auto', eps = 0.05, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    def filter_func(p, interval):
+    def filter_func(point, interval):
         flag = True
         for i in range(len(interval)):
-            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+            flag = flag and (point[i] >= interval[i][0] and point[i] <= interval[i][1])
         
         return flag
 
@@ -147,3 +158,22 @@ if __name__ == "__main__":
 
     # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
     # graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
+
+    """
+    EXAMPLE 3
+    """
+    # data = get_data_from_gts("data/sphere20.gts")
+    # mapper = Mapper(data)
+    # cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
+
+    # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
+
+    # def filter_func(p, interval):
+    #     flag = True
+    #     for i in range(len(interval)):
+    #         flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+        
+    #     return flag
+
+    # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
+    # graph = mapper.create_graph(file_name = "sphere20.html")
