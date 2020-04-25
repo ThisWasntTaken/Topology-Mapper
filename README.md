@@ -18,7 +18,7 @@ To construct the graph, we require:
 
 The filter function is used to represent the data in a lower dimension space. Dimensionality-reduction techniques like PCA or t-SNE could be used here if required for data in very high dimensions.
 
-## An Example
+<!-- ## An Example
 Consider a data created using the following function on sklearn.
 ```python
 make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5)
@@ -37,4 +37,4 @@ Since the intervals in the cover are overlapping, consecutive intervals can cont
 
 Click [here](https://thiswasnttaken.github.io//assets/html/make_circles(n_samples%20=%2010000,%20noise%20=%200.05,%20random_state%20=%2044,%20factor%20=%200.5).html) for an interactive version.
 
-Each cycle in the graph corresponds to a circle in the data. However, the feature that the two circles are concentric is not captured by Mapper.
+Each cycle in the graph corresponds to a circle in the data. However, the feature that the two circles are concentric is not captured by Mapper. -->
