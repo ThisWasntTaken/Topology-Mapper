@@ -41,21 +41,21 @@ This implementation included additional utility functions which are given below:
 	constructs a cover for the given range of the filter function.
 
 	Parameters:
-		* range 	: the ranges of the filter functions, a list of n tuples (low, high) for n dimensions
-		* interval_len 	: the length of the intervals to be created for the cover, a list of n integers for n dimensions
-		* overlap	: the overlap between two consecutive intervals, a list of n integers for n dimensions
+		..* range 	: the ranges of the filter functions, a list of n tuples (low, high) for n dimensions
+		..* interval_len 	: the length of the intervals to be created for the cover, a list of n integers for n dimensions
+		..* overlap	: the overlap between two consecutive intervals, a list of n integers for n dimensions
 
 	Returns:
-		* a list of n lists for n dimensions
+		..* a list of n lists for n dimensions
 
 2. get_data_from_gts(gts_file_name):
 	extracts data from a GNU Triangulated Surface data file (.gts).
 
 	Parameters:
-		* gts_file_name	: the file path of the .gts data file
+		..* gts_file_name	: the file path of the .gts data file
 
 	Returns:
-		* point cloud data in the format of numpy.array()
+		..* point cloud data in the format of numpy.array()
 
 The file mapper.py also includes 3 examples, one of which uses a .gts file. The flow of the algorithm is generally as follows:
 1. Create or extract data from a .gts file.
