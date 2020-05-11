@@ -38,6 +38,7 @@ This implementation of Mapper includes support for multiple filter functions and
 This implementation included additional utility functions which are given below:
 
 1. Mapper.get_cover(range, interval_len, overlap):
+
 	constructs a cover for the given range of the filter function.
 
 	Parameters:
@@ -49,6 +50,7 @@ This implementation included additional utility functions which are given below:
     - a list of n lists for n dimensions
 
 2. get_data_from_gts(gts_file_name):
+
 	extracts data from a GNU Triangulated Surface data file (.gts).
 
 	Parameters:
