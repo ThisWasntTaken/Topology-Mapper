@@ -140,40 +140,44 @@ if __name__ == "__main__":
     clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
     graph = mapper.create_graph(file_name = "make_circles(n_samples = 10000, noise = 0.05, random_state = 44, factor = 0.5).html")
 
+
+
     """
     EXAMPLE 2
     """
-    # data = make_blobs(n_samples = 5000, n_features = 5, random_state = 44)[0]
-    # mapper = Mapper(data)
-    # cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
+    data = make_blobs(n_samples = 5000, n_features = 5, random_state = 44)[0]
+    mapper = Mapper(data)
+    cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
 
-    # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
+    dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    # def filter_func(p, interval):
-    #     flag = True
-    #     for i in range(len(interval)):
-    #         flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+    def filter_func(p, interval):
+        flag = True
+        for i in range(len(interval)):
+            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
         
-    #     return flag
+        return flag
 
-    # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    # graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
+    clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
+    graph = mapper.create_graph(file_name = "make_blobs(n_samples = 5000, n_features = 5, random_state = 44).html")
+
+    
 
     """
     EXAMPLE 3
     """
-    # data = get_data_from_gts("data/sphere20.gts")
-    # mapper = Mapper(data)
-    # cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
+    data = get_data_from_gts("data/sphere20.gts")
+    mapper = Mapper(data)
+    cover = Mapper.get_cover(range_ = [(-2, 13), (-12, 3)], interval_len = [2, 1], overlap = [0.5, 0.3])
 
-    # dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
+    dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    # def filter_func(p, interval):
-    #     flag = True
-    #     for i in range(len(interval)):
-    #         flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+    def filter_func(p, interval):
+        flag = True
+        for i in range(len(interval)):
+            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
         
-    #     return flag
+        return flag
 
-    # clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
-    # graph = mapper.create_graph(file_name = "sphere20.html")
+    clusters = mapper.get_clusters(filter_func = filter_func, cover = cover, dbscan_algo = dbscan_algo)
+    graph = mapper.create_graph(file_name = "sphere20.html")
