@@ -151,10 +151,10 @@ if __name__ == "__main__":
 
     dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    def filter_func(p, interval):
+    def filter_func(point, interval):
         flag = True
         for i in range(len(interval)):
-            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+            flag = flag and (point[i] >= interval[i][0] and point[i] <= interval[i][1])
         
         return flag
 
@@ -172,10 +172,10 @@ if __name__ == "__main__":
 
     dbscan_algo = DBSCAN(algorithm = 'auto', eps = 1, leaf_size = 30, metric = 'euclidean', min_samples = 3, p = None)
 
-    def filter_func(p, interval):
+    def filter_func(point, interval):
         flag = True
         for i in range(len(interval)):
-            flag = flag and (p[i] >= interval[i][0] and p[i] <= interval[i][1])
+            flag = flag and (point[i] >= interval[i][0] and point[i] <= interval[i][1])
         
         return flag
 
